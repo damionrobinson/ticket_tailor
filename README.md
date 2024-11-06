@@ -44,4 +44,4 @@ This code is intended for demonstration purposes, with a focus on user experienc
 
 ---
 
-Thank you for checking out the project!
+Thanks Tom for sending over the project!
