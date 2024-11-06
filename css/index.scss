@@ -77,9 +77,14 @@ html, body {
     background: $white;
     text-decoration: none;
     color: $black;
+
+    &:hover {
+      border-color: $primary;
+    }
   }
 
   &-list {
+
     &.show {
       display: flex;
       top: 4rem;
@@ -91,13 +96,26 @@ html, body {
     padding-bottom: 0.5rem;
     flex-direction: column;
     align-items: flex-start;
+    max-height: 20rem;
+    overflow: auto;
 
-    border-radius: 0.3125rem;
+    border-radius: 1.3125rem;
     border: 0.5px solid $border;
     background: #FFF;
 
     /* shadow-lg */
     box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.05);
+
+    &_clear{
+      padding: 0.5rem;
+      color: darken($primary,10%);
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 140%;
+      text-decoration: none;
+    }
+
 
     &_search {
       display: flex;
@@ -140,8 +158,18 @@ html, body {
 
     .dropdown-item {
       display: flex;
-      padding: 0.5rem 0;
       align-items: flex-start;
+      width: 100%;
+
+      label {
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        width: 100%;
+        &.selected,
+        &:hover {
+          background-color: lighten($black, 80%);
+        }
+      }
     }
   }
 }

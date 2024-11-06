@@ -63,6 +63,9 @@ html, body {
   text-decoration: none;
   color: #222432;
 }
+#form .dropdown-button:hover {
+  border-color: #f9c8bd;
+}
 #form .dropdown-list {
   position: absolute;
   display: none;
@@ -70,7 +73,9 @@ html, body {
   padding-bottom: 0.5rem;
   flex-direction: column;
   align-items: flex-start;
-  border-radius: 0.3125rem;
+  max-height: 20rem;
+  overflow: auto;
+  border-radius: 1.3125rem;
   border: 0.5px solid #E2E8F0;
   background: #FFF;
   /* shadow-lg */
@@ -79,6 +84,15 @@ html, body {
 #form .dropdown-list.show {
   display: flex;
   top: 4rem;
+}
+#form .dropdown-list_clear {
+  padding: 0.5rem;
+  color: #f5a18e;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 140%;
+  text-decoration: none;
 }
 #form .dropdown-list_search {
   display: flex;
@@ -114,8 +128,16 @@ html, body {
 }
 #form .dropdown-menu .dropdown-item {
   display: flex;
-  padding: 0.5rem 0;
   align-items: flex-start;
+  width: 100%;
+}
+#form .dropdown-menu .dropdown-item label {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+#form .dropdown-menu .dropdown-item label.selected, #form .dropdown-menu .dropdown-item label:hover {
+  background-color: #f4f5f8;
 }
 
 /*# sourceMappingURL=index.css.map */

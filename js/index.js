@@ -1,74 +1,113 @@
 $(document).ready(function () {
-  console.log("ready!");
-  const dropdown_btn = $('.dropdown-button');
-  const dropdown_list = $('.dropdown-list');
-  const dropdown_menu = $('.dropdown-menu');
-  const dropdown_list_input = $('.dropdown-list_input');
-  const btn_submit = $('.btn-submit');
+  const dropdownBtn = $('.dropdown-button');
+  const clearBtn = $('.dropdown-list_clear');
+  const dropdownList = $('.dropdown-list');
+  const dropdownMenu = $('.dropdown-menu');
+  const dropdownSearchInput = $('.dropdown-list_search_input');
+  const submitBtn = $('.btn-submit');
 
-  // Show menu
-  dropdown_btn
-    .click(function () {
-      console.log('btn clicked')
-      dropdown_list.addClass('show');
-
-      setTimeout(function () {
-        dropdown_list_input.focus();
-      }, 300);
-    });
-
-  // Stop event propagation
-  btn_submit.click(function (e) {
-    e.stopPropagation();
-    /// Submit the selection
-
-  });
-
-  // list of document clicks, to hide drops or use for top level controls
-  $(document).mouseup(function (e) {
-    // if the target of the click isn't the container nor a descendant of the container
-    if (!dropdown_list.is(e.target) && dropdown_list.has(e.target).length === 0) {
-      dropdown_list.removeClass('show');
-    }
-  });
-
-  /*** JSON of States for demo purposes, note used date ISO format
-   *** for more flexibility, e.g. if we want to add date picker/range
-   *** pinter so users can filter by dates and time as well as the event name
-   ***/
-  let usStates = [
-    {name: 'Summer Party', abbreviation: 'SP_JUL_2023', dateTime: '15:00 7th July 2023'},
-    {name: '  Christmas Party', abbreviation: 'CP_DEC_203', dateTime: '19:00 18th Dec 2023'},
-    {name: 'Marathon', abbreviation: 'M_SEP_2024', dateTime: '13:00 15th Sept 2024'},
+  // JSON data for events
+  const eventList = [
+    {name: 'Summer Party', id: 'SP_JUL_2023', dateTime: '15:00 7th July 2023'},
+    {name: 'Christmas Party', id: 'CP_DEC_2023', dateTime: '19:00 18th Dec 2023'},
+    {name: 'Marathon', id: 'M_SEP_2024', dateTime: '13:00 15th Sept 2024'},
+    // Add more events as needed for testing with large datasets
   ];
 
-// Populate the list with states
-  usStates.forEach(function (item) {
-    let stateTemplate = `<li class="dropdown-item">
-      <input name="${item.abbreviation}" type="checkbox">
-      <label for="${item.abbreviation}">${item.name}</label>
-      </li>
-      `
-    dropdown_menu.append(stateTemplate);
+
+
+  // Add Hundreds of events
+  function addEvents() {
+    for (let i = 0; i <= 130; i++) {
+      let event = {
+        name: `Event Name - ${i}`,
+        id: `event_${i}`, // Unique ID for each event
+        dateTime: '13:00 15th Sept 2024'
+      };
+      eventList.push(event);
+    }
+    // Refresh dropdown options with new events
+    populateDropdown();
+  }
+
+  // Array to track selected events
+  let selectedList = [];
+
+  // Check if submit button should be enabled or disabled
+  const updateSubmitButtonState = () => {
+    submitBtn.prop('disabled', selectedList.length === 0);
+  };
+
+  // Toggle dropdown visibility
+  dropdownBtn.click(function () {
+    dropdownList.toggleClass('show');
+    setTimeout(() => dropdownSearchInput.focus(), 300);
   });
 
-  // Filter the list on keyup
-  dropdown_list_input.on('input',
-    function (e) {
-      let search = e.target.value.toLowerCase();
-      console.log(search);
-
-      if (!search) {
-        dropdown_menu.find('li').show();
-        return false;
-      }
-
-      dropdown_menu.find('li').each(function () {
-        let text = $(this).text().toLowerCase();
-        let match = text.indexOf(search) > -1;
-        $(this).toggle(match);
-      });
+  // Close dropdown when clicking outside of it
+  $(document).mouseup(function (e) {
+    if (!dropdownList.is(e.target) && dropdownList.has(e.target).length === 0) {
+      dropdownList.removeClass('show');
     }
-  );
+  });
 
+  // Populate dropdown with event items
+  const populateDropdown = () => {
+    dropdownMenu.empty();
+    eventList.forEach((event) => {
+      const itemTemplate = `
+        <li class="dropdown-item">
+          <label for="${event.id}">
+            <input name="${event.id}" id="${event.id}" type="checkbox">
+            ${event.name} - ${event.dateTime}
+          </label>
+        </li>`;
+      dropdownMenu.append(itemTemplate);
+    });
+  };
+
+  // Filter events in the dropdown based on search input
+  dropdownSearchInput.on('input', function (e) {
+    const search = e.target.value.toLowerCase();
+    dropdownMenu.find('li').each(function () {
+      const text = $(this).text().toLowerCase();
+      $(this).toggle(text.includes(search));
+    });
+  });
+
+  // Update selected list and display count
+  dropdownList.on('change', '[type="checkbox"]', function () {
+    const current = $(this)[0];
+    const item = eventList.find(i => i.id === current.id);
+
+    if (current.checked) {
+      selectedList.push(item.id);
+    } else {
+      selectedList = selectedList.filter(id => id !== current.id);
+    }
+
+    const numChecked = selectedList.length;
+    dropdownBtn.find('.quantity').text(numChecked || 'Any');
+    updateSubmitButtonState();
+  });
+
+  // Submit selected items
+  submitBtn.click(function (e) {
+    e.preventDefault();
+    alert(`Post Items: ${selectedList.join(', ')}`);
+    // Replace alert with actual post request logic if needed
+  });
+
+  // Clear all selections
+  clearBtn.click(() => {
+    dropdownList.find('input[type=checkbox]').prop('checked', false);
+    selectedList = [];
+    dropdownBtn.find('.quantity').text('Any');
+    updateSubmitButtonState();
+  });
+
+  // Initial population of dropdown and button state
+  populateDropdown();
+  updateSubmitButtonState();
+  addEvents();
 });
