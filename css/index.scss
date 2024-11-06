@@ -1,0 +1,147 @@
+$border: #E2E8F0;
+$white: #fff;
+$primary: #f9c8bd;
+$black: #222432;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: "Inter", serif;
+  transition: all .25s ease;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 32rem;
+  padding: 2rem;
+  gap: 1rem;
+
+  margin: 8rem auto;
+
+  border-radius: 1rem;
+  border: 1px solid $border;
+  background: $white;
+
+  /* shadow-md */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+  .logo {
+    width: 11rem;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+
+    .btn-submit {
+      padding: 0.75rem 1.25rem;
+      border-radius: 4rem;
+      font-weight: 600;
+      background-color: $primary;
+      cursor: pointer;
+      border: 1px solid $primary;
+      transition: all .25s ease-in-out;
+
+      &:hover {
+        border: 1px solid $primary;
+        background-color: darken($primary, 10%);;
+      }
+    }
+  }
+}
+
+#form .dropdown {
+  position: relative;
+  display: flex;
+  width: 100%;
+
+  &-button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+
+    padding: 0.25rem 0.25rem 0.25rem 1rem;
+    border-radius: 2.75rem;
+
+    border: 1px solid $border;
+    background: $white;
+    text-decoration: none;
+    color: $black;
+  }
+
+  &-list {
+    &.show {
+      display: flex;
+      top: 4rem;
+    }
+
+    position: absolute;
+    display: none;
+    width: 100%;
+    padding-bottom: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 0.3125rem;
+    border: 0.5px solid $border;
+    background: #FFF;
+
+    /* shadow-lg */
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.05);
+
+    &_search {
+      display: flex;
+      padding: 0.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      align-self: stretch;
+
+      input {
+        width: 100%;
+        padding: 0.625rem 0.25rem;
+        border-radius: 2.75rem;
+        border: 1px solid $border;
+        background: $white;
+        text-align: center;
+
+        &::placeholder {
+          color: lighten($black, 10%);
+          font-weight: 500;
+        }
+
+        &:focus {
+          outline: none;
+
+          box-shadow: 0 0 4px 0 $primary;
+          //border: 3px solid #555;
+        }
+      }
+    }
+  }
+
+  &-menu {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    .dropdown-item {
+      display: flex;
+      padding: 0.5rem 0;
+      align-items: flex-start;
+    }
+  }
+}
