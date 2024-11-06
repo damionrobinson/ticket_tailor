@@ -1,6 +1,6 @@
 # Ticket Tailor Event Selection
 
-This project provides a user-friendly event selection dropdown designed for Ticket Tailor. It allows event organizers to filter customer orders by selecting one or multiple events from a dropdown menu.
+This project provides a user-friendly event selection dropdown designed for Ticket Tailor. It allows event organisers to filter customer orders by selecting one or multiple events from a dropdown menu.
 
 ## Features
 
@@ -8,7 +8,7 @@ This project provides a user-friendly event selection dropdown designed for Tick
 - Search functionality to easily locate events in large lists.
 - Clear selection button to reset the event selection.
 - Submit button that posts selected event IDs as a comma-separated list.
-- Optimized for usability and aesthetics with clean, modular code.
+- Optimised for usability and aesthetics with clean, modular code.
 
 ## Demo
 
